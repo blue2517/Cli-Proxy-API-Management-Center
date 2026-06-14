@@ -38,6 +38,7 @@ import {
   PayloadFilterRulesEditor,
   PayloadRulesEditor,
 } from './VisualConfigEditorBlocks';
+import { ProxyHealthBadge } from './ProxyHealthBadge';
 import styles from './VisualConfigEditor.module.scss';
 
 type VisualSectionId = 'server' | 'auth' | 'system' | 'quota' | 'streaming' | 'payload';
@@ -847,6 +848,9 @@ export function VisualConfigEditor({
                       onChange={(e) => onChange({ proxyUrl: e.target.value })}
                       disabled={disabled}
                     />
+                  </SectionGrid>
+                  {values.proxyUrl && <ProxyHealthBadge />}
+                  <SectionGrid>
                     <Input
                       label={t('config_management.visual.sections.network.request_retry')}
                       type="number"
