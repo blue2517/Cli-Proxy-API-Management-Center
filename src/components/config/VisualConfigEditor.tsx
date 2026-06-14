@@ -49,6 +49,7 @@ import {
   type ConfigFieldSearchEntry,
   type VisualSectionId,
 } from './configSearchIndex';
+import { ProxyHealthBadge } from './ProxyHealthBadge';
 import styles from './VisualConfigEditor.module.scss';
 
 type EditorMode = 'simple' | 'full';
@@ -932,6 +933,7 @@ export function VisualConfigEditor({
                   />
                 </FieldAnchor>
 
+<<<<<<< HEAD
                 {apiKeysField}
 
                 <Collapsible
@@ -1064,6 +1066,9 @@ export function VisualConfigEditor({
               <SectionStack>
                 <SectionGrid>
                   {proxyUrlField}
+                </SectionGrid>
+                {values.proxyUrl && <ProxyHealthBadge />}
+                <SectionGrid>
                   <FieldAnchor fieldId="requestRetry">
                     <Input
                       label={t('config_management.visual.sections.network.request_retry')}
