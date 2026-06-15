@@ -1,6 +1,7 @@
 import type {
   ApiKeyEntry,
   CloakConfig,
+  CountTokensConfig,
   GeminiKeyConfig,
   ModelAlias,
   OpenAIProviderConfig,
@@ -15,6 +16,22 @@ const normalizeBoolean = (value: unknown): boolean | undefined =>
 
 const normalizeRecord = (value: unknown): Record<string, unknown> | undefined =>
   isRecord(value) ? value : undefined;
+
+const normalizeCountTokens = (value: unknown): CountTokensConfig | undefined => {
+  if (!isRecord(value)) return undefined;
+  const rawMode = typeof value.mode === 'string' ? value.mode.trim().toLowerCase() : '';
+  const redirectModel =
+    typeof value['redirect-model'] === 'string' ? value['redirect-model'].trim() : '';
+  if (rawMode === 'disabled') {
+    return { mode: 'disabled' };
+  }
+  if (rawMode === 'redirect') {
+    if (!redirectModel) return undefined;
+    return { mode: 'redirect', redirectModel };
+  }
+  // "forward", empty, or unknown modes carry no override.
+  return undefined;
+};
 
 const normalizeModelAliases = (models: unknown): ModelAlias[] => {
   if (!Array.isArray(models)) return [];
@@ -176,6 +193,8 @@ const normalizeProviderKeyConfig = (item: unknown): ProviderKeyConfig | null => 
   if (experimentalCchSigning !== undefined) {
     config.experimentalCchSigning = experimentalCchSigning;
   }
+  const countTokens = normalizeCountTokens(record?.['count-tokens']);
+  if (countTokens) config.countTokens = countTokens;
 
   return config;
 };
@@ -214,6 +233,8 @@ const normalizeGeminiKeyConfig = (item: unknown): GeminiKeyConfig | null => {
   if (excludedModels.length) config.excludedModels = excludedModels;
   const authIndex = normalizeAuthIndex(record?.['auth-index']);
   if (authIndex) config.authIndex = authIndex;
+  const countTokens = normalizeCountTokens(record?.['count-tokens']);
+  if (countTokens) config.countTokens = countTokens;
   return config;
 };
 
@@ -252,6 +273,8 @@ const normalizeOpenAIProvider = (provider: unknown): OpenAIProviderConfig | null
   if (testModel) result.testModel = String(testModel);
   const authIndex = normalizeAuthIndex(provider['auth-index']);
   if (authIndex) result.authIndex = authIndex;
+  const countTokens = normalizeCountTokens(provider['count-tokens']);
+  if (countTokens) result.countTokens = countTokens;
   return result;
 };
 

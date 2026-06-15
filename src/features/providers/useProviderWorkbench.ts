@@ -7,7 +7,14 @@ import {
   withDisableAllModelsRule,
   withoutDisableAllModelsRule,
 } from '@/components/providers/utils';
-import type { GeminiKeyConfig, ModelAlias, OpenAIProviderConfig, ProviderKeyConfig } from '@/types';
+import type {
+  AmpcodeConfig,
+  CountTokensConfig,
+  GeminiKeyConfig,
+  ModelAlias,
+  OpenAIProviderConfig,
+  ProviderKeyConfig,
+} from '@/types';
 import {
   apiKeyFunToResource,
   claudeToResource,
@@ -54,6 +61,20 @@ export interface UseProviderWorkbenchResult {
 /* -------------------------------------------------------------------------- */
 /* form -> backend config 转换                                                 */
 /* -------------------------------------------------------------------------- */
+
+const buildCountTokens = (
+  input: ProviderEntryFormInput
+): CountTokensConfig | undefined => {
+  const ct = input.countTokens;
+  if (!ct) return undefined;
+  if (ct.mode === 'disabled') return { mode: 'disabled' };
+  if (ct.mode === 'redirect') {
+    const redirectModel = ct.redirectModel.trim();
+    if (!redirectModel) return undefined;
+    return { mode: 'redirect', redirectModel };
+  }
+  return undefined;
+};
 
 const parseTextList = (text: string): string[] =>
   text
@@ -138,6 +159,7 @@ const buildProviderKeyConfig = (
     headers: Object.keys(headers).length ? headers : undefined,
     excludedModels: excluded,
     disableCooling: input.disableCooling === true,
+    countTokens: buildCountTokens(input),
     authIndex: existing?.authIndex,
   };
   if (brand === 'codex' && input.websockets !== undefined) {
@@ -188,6 +210,7 @@ const buildOpenAIConfig = (
     models: models.length ? models : undefined,
     priority: input.priority,
     testModel: input.testModel?.trim() || undefined,
+    countTokens: buildCountTokens(input),
   };
 };
 

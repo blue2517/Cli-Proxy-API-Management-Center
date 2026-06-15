@@ -133,6 +133,11 @@ export interface CloakInput {
   cacheUserId: boolean;
 }
 
+export interface CountTokensInput {
+  mode: 'forward' | 'disabled' | 'redirect';
+  redirectModel: string;
+}
+
 export interface ProviderEntryFormInput {
   /** OpenAI 创建时只在 apiKeyEntries 中传 */
   apiKey: string;
@@ -143,6 +148,7 @@ export interface ProviderEntryFormInput {
   prefix: string;
   disabled: boolean;
   disableCooling?: boolean;
+  countTokens?: CountTokensInput;
   priority?: number;
 
   /** 高级折叠区 */
