@@ -25,6 +25,13 @@ export interface CloakConfig {
   cacheUserId?: boolean;
 }
 
+export type CountTokensMode = 'forward' | 'disabled' | 'redirect';
+
+export interface CountTokensConfig {
+  mode?: CountTokensMode;
+  redirectModel?: string;
+}
+
 export interface GeminiKeyConfig {
   apiKey: string;
   priority?: number;
@@ -35,6 +42,7 @@ export interface GeminiKeyConfig {
   headers?: Record<string, string>;
   excludedModels?: string[];
   disableCooling?: boolean;
+  countTokens?: CountTokensConfig;
   authIndex?: string;
 }
 
@@ -51,6 +59,7 @@ export interface ProviderKeyConfig {
   disableCooling?: boolean;
   cloak?: CloakConfig;
   experimentalCchSigning?: boolean;
+  countTokens?: CountTokensConfig;
   authIndex?: string;
 }
 
@@ -65,6 +74,7 @@ export interface OpenAIProviderConfig {
   priority?: number;
   testModel?: string;
   disableCooling?: boolean;
+  countTokens?: CountTokensConfig;
   authIndex?: string;
   [key: string]: unknown;
 }

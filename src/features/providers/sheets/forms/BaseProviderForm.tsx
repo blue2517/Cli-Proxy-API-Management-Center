@@ -13,11 +13,17 @@ import {
 import { Collapsible } from '@/components/ui/Collapsible';
 import { Select } from '@/components/ui/Select';
 import { hasDisableAllModelsRule } from '@/components/providers/utils';
-import type { GeminiKeyConfig, OpenAIProviderConfig, ProviderKeyConfig } from '@/types';
+import type {
+  CountTokensConfig,
+  GeminiKeyConfig,
+  OpenAIProviderConfig,
+  ProviderKeyConfig,
+} from '@/types';
 import type { ModelInfo } from '@/utils/models';
 import { PROVIDER_DESCRIPTORS } from '../../descriptors';
 import type {
   ApiKeyEntryInput,
+  CountTokensInput,
   ModelEntryInput,
   ProviderBrand,
   ProviderEntryFormInput,
@@ -61,6 +67,16 @@ const formatJsonObject = (value?: Record<string, unknown>): string => {
   return JSON.stringify(value, null, 2);
 };
 
+const emptyCountTokens = (): CountTokensInput => ({ mode: 'forward', redirectModel: '' });
+
+const countTokensFromConfig = (config?: CountTokensConfig): CountTokensInput => {
+  if (config?.mode === 'disabled') return { mode: 'disabled', redirectModel: '' };
+  if (config?.mode === 'redirect') {
+    return { mode: 'redirect', redirectModel: config.redirectModel ?? '' };
+  }
+  return emptyCountTokens();
+};
+
 function buildInitialForm(
   brand: Exclude<ProviderBrand, 'ampcode'>,
   resource: ProviderResource | null,
@@ -75,6 +91,9 @@ function buildInitialForm(
       prefix: '',
       disabled: false,
       disableCooling: false,
+      countTokens: PROVIDER_DESCRIPTORS[brand].supportsCountTokens
+        ? emptyCountTokens()
+        : undefined,
       priority: undefined,
       models: [emptyModel()],
       headers: [emptyHeader()],
@@ -104,6 +123,9 @@ function buildInitialForm(
       prefix: cfg.prefix ?? '',
       disabled: cfg.disabled === true,
       disableCooling: cfg.disableCooling === true,
+      countTokens: PROVIDER_DESCRIPTORS[brand].supportsCountTokens
+        ? countTokensFromConfig(cfg.countTokens)
+        : undefined,
       priority: cfg.priority,
       models: cfg.models?.length
         ? cfg.models.map((m) => ({
@@ -146,6 +168,9 @@ function buildInitialForm(
     prefix: cfg.prefix ?? '',
     disabled,
     disableCooling: cfg.disableCooling === true,
+    countTokens: PROVIDER_DESCRIPTORS[brand].supportsCountTokens
+      ? countTokensFromConfig(cfg.countTokens)
+      : undefined,
     priority: cfg.priority,
     models: cfg.models?.length
       ? cfg.models.map((m) => ({
@@ -392,6 +417,19 @@ export function BaseProviderForm({
           sensitiveWordsText: '',
           cacheUserId: false,
         }),
+        [key]: value,
+      },
+    }));
+  };
+
+  const updateCountTokens = <K extends keyof CountTokensInput>(
+    key: K,
+    value: CountTokensInput[K]
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      countTokens: {
+        ...(prev.countTokens ?? emptyCountTokens()),
         [key]: value,
       },
     }));
@@ -719,6 +757,35 @@ export function BaseProviderForm({
               <small>{t('providersPage.form.disableCoolingHint')}</small>
             </span>
           </label>
+        ) : null}
+
+        {descriptor.supportsCountTokens && form.countTokens ? (
+          <div className={styles.field}>
+            <label className={styles.label}>{t('providersPage.form.countTokens')}</label>
+            <span className={styles.labelHint}>{t('providersPage.form.countTokensHint')}</span>
+            <Select
+              value={form.countTokens.mode}
+              disabled={mutating}
+              ariaLabel={t('providersPage.form.countTokens')}
+              options={[
+                { value: 'forward', label: t('providersPage.form.countTokensModeForward') },
+                { value: 'disabled', label: t('providersPage.form.countTokensModeDisabled') },
+                { value: 'redirect', label: t('providersPage.form.countTokensModeRedirect') },
+              ]}
+              onChange={(value) =>
+                updateCountTokens('mode', value as CountTokensInput['mode'])
+              }
+            />
+            {form.countTokens.mode === 'redirect' ? (
+              <input
+                className={styles.input}
+                value={form.countTokens.redirectModel}
+                onChange={(e) => updateCountTokens('redirectModel', e.target.value)}
+                placeholder={t('providersPage.form.countTokensRedirectModelPlaceholder')}
+                disabled={mutating}
+              />
+            ) : null}
+          </div>
         ) : null}
       </div>
 

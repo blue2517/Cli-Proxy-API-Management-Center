@@ -16,6 +16,7 @@ export interface ProviderDescriptor {
   supportsTestModel: boolean;
   supportsWebsockets: boolean;
   supportsCloak: boolean;
+  supportsCountTokens: boolean;
   supportsApiKeyEntries: boolean;
   supportsAmpcodeMappings: boolean;
   /** Sheet 默认宽度 */
@@ -39,6 +40,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsTestModel: true,
     supportsWebsockets: false,
     supportsCloak: false,
+    supportsCountTokens: true,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: false,
     sheetSize: 'md',
@@ -59,6 +61,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsTestModel: false,
     supportsWebsockets: true,
     supportsCloak: false,
+    supportsCountTokens: true,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: false,
     sheetSize: 'md',
@@ -79,6 +82,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsTestModel: true,
     supportsWebsockets: false,
     supportsCloak: true,
+    supportsCountTokens: true,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: false,
     sheetSize: 'md',
@@ -99,6 +103,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsTestModel: false,
     supportsWebsockets: false,
     supportsCloak: false,
+    supportsCountTokens: false,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: false,
     sheetSize: 'md',
@@ -119,6 +124,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsTestModel: true,
     supportsWebsockets: false,
     supportsCloak: false,
+    supportsCountTokens: true,
     supportsApiKeyEntries: true,
     supportsAmpcodeMappings: false,
     sheetSize: 'lg',
@@ -139,6 +145,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsTestModel: false,
     supportsWebsockets: false,
     supportsCloak: false,
+    supportsCountTokens: false,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: true,
     sheetSize: 'lg',

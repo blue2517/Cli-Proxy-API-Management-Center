@@ -10,6 +10,7 @@ import {
   normalizeProviderKeyConfig,
 } from './transformers';
 import type {
+  CountTokensConfig,
   GeminiKeyConfig,
   OpenAIProviderConfig,
   ProviderKeyConfig,
@@ -19,6 +20,21 @@ import type {
 
 const serializeHeaders = (headers?: Record<string, string>) =>
   headers && Object.keys(headers).length ? headers : undefined;
+
+const serializeCountTokens = (config?: CountTokensConfig): Record<string, unknown> | undefined => {
+  if (!config) return undefined;
+  const mode = config.mode;
+  if (mode === 'disabled') {
+    return { mode: 'disabled' };
+  }
+  if (mode === 'redirect') {
+    const redirectModel = config.redirectModel?.trim();
+    if (!redirectModel) return undefined;
+    return { mode: 'redirect', 'redirect-model': redirectModel };
+  }
+  // "forward"/empty carries no override; omit so the backend stays clean.
+  return undefined;
+};
 
 const RESPONSE_ONLY_FIELDS = ['auth-index'] as const;
 
@@ -32,6 +48,7 @@ const PROVIDER_COMMON_KEY_FIELDS = [
   'models',
   'excluded-models',
   'disable-cooling',
+  'count-tokens',
 ] as const;
 
 const GEMINI_KEY_FIELDS = PROVIDER_COMMON_KEY_FIELDS;
@@ -63,6 +80,7 @@ const OPENAI_PROVIDER_FIELDS = [
   'models',
   'test-model',
   'disable-cooling',
+  'count-tokens',
 ] as const;
 
 const MODEL_ALIAS_FIELDS = ['name', 'alias', 'priority', 'test-model'] as const;
@@ -338,6 +356,8 @@ const serializeProviderKey = (config: ProviderKeyConfig) => {
   if (config.experimentalCchSigning) {
     payload['experimental-cch-signing'] = true;
   }
+  const countTokens = serializeCountTokens(config.countTokens);
+  if (countTokens) payload['count-tokens'] = countTokens;
   return payload;
 };
 
@@ -383,6 +403,8 @@ const serializeGeminiKey = (config: GeminiKeyConfig) => {
   if (config.excludedModels && config.excludedModels.length) {
     payload['excluded-models'] = config.excludedModels;
   }
+  const countTokens = serializeCountTokens(config.countTokens);
+  if (countTokens) payload['count-tokens'] = countTokens;
   return payload;
 };
 
@@ -403,6 +425,8 @@ const serializeOpenAIProvider = (provider: OpenAIProviderConfig) => {
   if (provider.priority !== undefined) payload.priority = provider.priority;
   if (provider.testModel) payload['test-model'] = provider.testModel;
   if (provider.disableCooling) payload['disable-cooling'] = true;
+  const countTokens = serializeCountTokens(provider.countTokens);
+  if (countTokens) payload['count-tokens'] = countTokens;
   return payload;
 };
 
