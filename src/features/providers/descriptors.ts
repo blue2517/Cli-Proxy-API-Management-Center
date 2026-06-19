@@ -17,6 +17,7 @@ export interface ProviderDescriptor {
   supportsWebsockets: boolean;
   supportsCloak: boolean;
   supportsCountTokens: boolean;
+  supportsFakeNonStream: boolean;
   supportsApiKeyEntries: boolean;
   supportsAmpcodeMappings: boolean;
   /** Sheet 默认宽度 */
@@ -41,6 +42,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: false,
     supportsCountTokens: true,
+    supportsFakeNonStream: true,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: false,
     sheetSize: 'md',
@@ -62,6 +64,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: true,
     supportsCloak: false,
     supportsCountTokens: true,
+    supportsFakeNonStream: true,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: false,
     sheetSize: 'md',
@@ -83,6 +86,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: true,
     supportsCountTokens: true,
+    supportsFakeNonStream: true,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: false,
     sheetSize: 'md',
@@ -104,6 +108,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: false,
     supportsCountTokens: false,
+    supportsFakeNonStream: false,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: false,
     sheetSize: 'md',
@@ -125,6 +130,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: false,
     supportsCountTokens: true,
+    supportsFakeNonStream: true,
     supportsApiKeyEntries: true,
     supportsAmpcodeMappings: false,
     sheetSize: 'lg',
@@ -146,6 +152,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: false,
     supportsCountTokens: false,
+    supportsFakeNonStream: false,
     supportsApiKeyEntries: false,
     supportsAmpcodeMappings: true,
     sheetSize: 'lg',

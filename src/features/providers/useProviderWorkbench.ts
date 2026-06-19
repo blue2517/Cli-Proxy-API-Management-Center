@@ -137,6 +137,7 @@ const buildProviderKeyConfig = (
     excludedModels: excluded,
     disableCooling: input.disableCooling === true,
     countTokens: buildCountTokens(input),
+    fakeNonStream: input.fakeNonStream === true ? true : undefined,
     authIndex: existing?.authIndex,
   };
   if (brand === 'codex' && input.websockets !== undefined) {
@@ -197,6 +198,7 @@ const buildOpenAIConfig = (
     priority: input.priority,
     testModel: input.testModel?.trim() || undefined,
     countTokens: buildCountTokens(input),
+    fakeNonStream: input.fakeNonStream === true ? true : undefined,
   };
 };
 

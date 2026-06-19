@@ -49,6 +49,7 @@ const PROVIDER_COMMON_KEY_FIELDS = [
   'excluded-models',
   'disable-cooling',
   'count-tokens',
+  'fake-non-stream',
 ] as const;
 
 const GEMINI_KEY_FIELDS = PROVIDER_COMMON_KEY_FIELDS;
@@ -81,6 +82,7 @@ const OPENAI_PROVIDER_FIELDS = [
   'test-model',
   'disable-cooling',
   'count-tokens',
+  'fake-non-stream',
 ] as const;
 
 const MODEL_ALIAS_FIELDS = ['name', 'alias', 'priority', 'test-model'] as const;
@@ -358,6 +360,7 @@ const serializeProviderKey = (config: ProviderKeyConfig) => {
   }
   const countTokens = serializeCountTokens(config.countTokens);
   if (countTokens) payload['count-tokens'] = countTokens;
+  if (config.fakeNonStream) payload['fake-non-stream'] = true;
   return payload;
 };
 
@@ -405,6 +408,7 @@ const serializeGeminiKey = (config: GeminiKeyConfig) => {
   }
   const countTokens = serializeCountTokens(config.countTokens);
   if (countTokens) payload['count-tokens'] = countTokens;
+  if (config.fakeNonStream) payload['fake-non-stream'] = true;
   return payload;
 };
 
@@ -427,6 +431,7 @@ const serializeOpenAIProvider = (provider: OpenAIProviderConfig) => {
   if (provider.disableCooling) payload['disable-cooling'] = true;
   const countTokens = serializeCountTokens(provider.countTokens);
   if (countTokens) payload['count-tokens'] = countTokens;
+  if (provider.fakeNonStream) payload['fake-non-stream'] = true;
   return payload;
 };
 

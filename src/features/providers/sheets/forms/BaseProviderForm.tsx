@@ -94,6 +94,7 @@ function buildInitialForm(
       countTokens: PROVIDER_DESCRIPTORS[brand].supportsCountTokens
         ? emptyCountTokens()
         : undefined,
+      fakeNonStream: PROVIDER_DESCRIPTORS[brand].supportsFakeNonStream ? false : undefined,
       priority: undefined,
       models: [emptyModel()],
       headers: [emptyHeader()],
@@ -125,6 +126,9 @@ function buildInitialForm(
       disableCooling: cfg.disableCooling === true,
       countTokens: PROVIDER_DESCRIPTORS[brand].supportsCountTokens
         ? countTokensFromConfig(cfg.countTokens)
+        : undefined,
+      fakeNonStream: PROVIDER_DESCRIPTORS[brand].supportsFakeNonStream
+        ? cfg.fakeNonStream === true
         : undefined,
       priority: cfg.priority,
       models: cfg.models?.length
@@ -170,6 +174,9 @@ function buildInitialForm(
     disableCooling: cfg.disableCooling === true,
     countTokens: PROVIDER_DESCRIPTORS[brand].supportsCountTokens
       ? countTokensFromConfig(cfg.countTokens)
+      : undefined,
+    fakeNonStream: PROVIDER_DESCRIPTORS[brand].supportsFakeNonStream
+      ? cfg.fakeNonStream === true
       : undefined,
     priority: cfg.priority,
     models: cfg.models?.length
@@ -755,6 +762,22 @@ export function BaseProviderForm({
             <span className={styles.checkboxText}>
               <span>{t('providersPage.form.disableCooling')}</span>
               <small>{t('providersPage.form.disableCoolingHint')}</small>
+            </span>
+          </label>
+        ) : null}
+
+        {descriptor.supportsFakeNonStream ? (
+          <label className={styles.checkboxRow}>
+            <input
+              type="checkbox"
+              className={styles.checkboxBox}
+              checked={form.fakeNonStream ?? false}
+              disabled={mutating}
+              onChange={(e) => updateField('fakeNonStream', e.target.checked)}
+            />
+            <span className={styles.checkboxText}>
+              <span>{t('providersPage.form.fakeNonStream')}</span>
+              <small>{t('providersPage.form.fakeNonStreamHint')}</small>
             </span>
           </label>
         ) : null}

@@ -1506,6 +1506,8 @@
       "hideApiKey": "隱藏金鑰",
       "disableCooling": "停用冷卻調度",
       "disableCoolingHint": "僅對目前憑證或提供商停用失敗後的冷卻視窗",
+      "fakeNonStream": "假非流",
+      "fakeNonStreamHint": "將非串流請求以串流方式發往上游，再聚合為單一非串流回應返回。當上游的非串流通道不穩定時使用。",
       "countTokens": "Token 計算 (count_tokens)",
       "countTokensHint": "如何處理本憑證的 /v1/messages/count_tokens 請求。上游不支援時選「停用」（立即回傳 404，客戶端自行回退估算），或選「重新導向」用另一個模型的通道來計算。",
       "countTokensModeForward": "轉發（預設）",
