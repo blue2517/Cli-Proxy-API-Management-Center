@@ -1601,6 +1601,8 @@
       "hideApiKey": "Hide API key",
       "disableCooling": "Disable cooling",
       "disableCoolingHint": "Disable failure cooldown windows only for this credential or provider",
+      "fakeNonStream": "Fake non-stream",
+      "fakeNonStreamHint": "Issue non-streaming requests to the upstream as streaming, then aggregate back into a single response. Use when the upstream's non-streaming path is unreliable.",
       "countTokens": "Count tokens",
       "countTokensHint": "How to handle /v1/messages/count_tokens for this credential. Use Disabled when the upstream doesn't support it (returns 404 fast so the client falls back), or Redirect to count via another model's channel.",
       "countTokensModeForward": "Forward (default)",

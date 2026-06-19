@@ -17,6 +17,7 @@ export interface ProviderDescriptor {
   supportsWebsockets: boolean;
   supportsCloak: boolean;
   supportsCountTokens: boolean;
+  supportsFakeNonStream: boolean;
   supportsApiKeyEntries: boolean;
   /** Sheet 默认宽度 */
   sheetSize: 'md' | 'lg' | 'xl';
@@ -40,6 +41,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: false,
     supportsCountTokens: true,
+    supportsFakeNonStream: true,
     supportsApiKeyEntries: false,
     sheetSize: 'md',
   },
@@ -60,6 +62,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: true,
     supportsCloak: false,
     supportsCountTokens: true,
+    supportsFakeNonStream: true,
     supportsApiKeyEntries: false,
     sheetSize: 'md',
   },
@@ -80,6 +83,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: true,
     supportsCountTokens: true,
+    supportsFakeNonStream: true,
     supportsApiKeyEntries: false,
     sheetSize: 'md',
   },
@@ -100,6 +104,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: false,
     supportsCountTokens: false,
+    supportsFakeNonStream: false,
     supportsApiKeyEntries: false,
     sheetSize: 'md',
   },
@@ -120,6 +125,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: false,
     supportsCountTokens: true,
+    supportsFakeNonStream: true,
     supportsApiKeyEntries: true,
     sheetSize: 'lg',
   },
@@ -140,6 +146,7 @@ export const PROVIDER_DESCRIPTORS: Record<ProviderBrand, ProviderDescriptor> = {
     supportsWebsockets: false,
     supportsCloak: false,
     supportsCountTokens: false,
+    supportsFakeNonStream: false,
     supportsApiKeyEntries: false,
     sheetSize: 'md',
   },

@@ -43,6 +43,7 @@ export interface GeminiKeyConfig {
   excludedModels?: string[];
   disableCooling?: boolean;
   countTokens?: CountTokensConfig;
+  fakeNonStream?: boolean;
   authIndex?: string;
 }
 
@@ -60,6 +61,7 @@ export interface ProviderKeyConfig {
   cloak?: CloakConfig;
   experimentalCchSigning?: boolean;
   countTokens?: CountTokensConfig;
+  fakeNonStream?: boolean;
   authIndex?: string;
 }
 
@@ -75,6 +77,7 @@ export interface OpenAIProviderConfig {
   testModel?: string;
   disableCooling?: boolean;
   countTokens?: CountTokensConfig;
+  fakeNonStream?: boolean;
   authIndex?: string;
   [key: string]: unknown;
 }

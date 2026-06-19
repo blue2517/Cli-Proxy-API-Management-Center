@@ -149,6 +149,7 @@ export interface ProviderEntryFormInput {
   disabled: boolean;
   disableCooling?: boolean;
   countTokens?: CountTokensInput;
+  fakeNonStream?: boolean;
   priority?: number;
 
   /** 高级折叠区 */

@@ -195,6 +195,8 @@ const normalizeProviderKeyConfig = (item: unknown): ProviderKeyConfig | null => 
   }
   const countTokens = normalizeCountTokens(record?.['count-tokens']);
   if (countTokens) config.countTokens = countTokens;
+  const fakeNonStream = normalizeBoolean(record?.['fake-non-stream']);
+  if (fakeNonStream !== undefined) config.fakeNonStream = fakeNonStream;
 
   return config;
 };
@@ -235,6 +237,8 @@ const normalizeGeminiKeyConfig = (item: unknown): GeminiKeyConfig | null => {
   if (authIndex) config.authIndex = authIndex;
   const countTokens = normalizeCountTokens(record?.['count-tokens']);
   if (countTokens) config.countTokens = countTokens;
+  const fakeNonStream = normalizeBoolean(record?.['fake-non-stream']);
+  if (fakeNonStream !== undefined) config.fakeNonStream = fakeNonStream;
   return config;
 };
 
@@ -275,6 +279,8 @@ const normalizeOpenAIProvider = (provider: unknown): OpenAIProviderConfig | null
   if (authIndex) result.authIndex = authIndex;
   const countTokens = normalizeCountTokens(provider['count-tokens']);
   if (countTokens) result.countTokens = countTokens;
+  const fakeNonStream = normalizeBoolean(provider['fake-non-stream']);
+  if (fakeNonStream !== undefined) result.fakeNonStream = fakeNonStream;
   return result;
 };
 
