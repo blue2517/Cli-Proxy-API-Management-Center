@@ -8,7 +8,6 @@ import {
   withoutDisableAllModelsRule,
 } from '@/components/providers/utils';
 import type {
-  AmpcodeConfig,
   CountTokensConfig,
   GeminiKeyConfig,
   ModelAlias,
