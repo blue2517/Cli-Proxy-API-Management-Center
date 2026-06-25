@@ -933,7 +933,6 @@ export function VisualConfigEditor({
                   />
                 </FieldAnchor>
 
-<<<<<<< HEAD
                 {apiKeysField}
 
                 <Collapsible
